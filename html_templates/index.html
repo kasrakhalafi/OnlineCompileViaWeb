@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+    <head>
+        < <title>Online Compiler</title>
+         {% load static %}
+        <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+        <link href="{% static '/css/materialize-rtl.min.css' %}" rel="stylesheet"/>
+        <script src="{% static '/js/materialize.min.js' %}"></script>
+        <script src="{%  static '/js/jquery-1.9.1.min.js' %}"></script>
+		<meta charset="UTF-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+    <body class="hi">
+
+
+		<div class="row">
+			<div class="col s12 m7">
+
+				<div class="dropdown001">
+					<button id="chooseCompiler" class="dropbtn001">choose compiler</button>
+						<div class="dropdown-content001">
+							<button id="python2" >python2</button>
+							<button id="python3">python3</button>
+							<button id="cpp" >C++</button>
+						</div>
+				</div>
+
+			</div>
+			<div class="col s12 m7">
+                                <div class="login">
+                                    <a onclick="document.getElementById('id01').style.display='block'" class="btn-floating btn-large pulse">
+                                        <i class="material-icons">
+                                            <div class="size">
+                                                login
+                                            </div>
+                                        </i>
+                                    </a>
+                                </div>
+                            </div>
+			<div class="col s12 m7">
+				<div class="welcome">
+					Welcome to easy complie!
+				</div>
+			</div>
+			<div class="col s12 m7">
+				<div class="code">
+					<textarea class="codein" id="textWriting" placeholder="Write your code here.." ></textarea>
+				</div>
+			</div>
+			<div class="col s12 m7">
+				<textarea readonly id="resultShow" class="result" placeholder="Code will be shown here">
+				</textarea>
+			</div>
+			<div class="col s12 m7">
+				<div class="openFile">
+					<form action="#">
+						<div class="file-field input-field">
+							<div class="btn">
+								<span>Open File</span>
+								<input type="file" multiple>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" onchange="loadFileAsText()" id="fileUpload" type="file" placeholder="Upload one or more files">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col s12 m7">
+				<div class="execute">
+					<button class="btn waves-effect waves-light" id="myBtn" type="submit" name="action">compile
+						<i class="material-icons right">send</i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m7">
+			<div id="id01" class="modal1">
+			  <form class="modal-content animate" action="#">
+				<div class="imgcontainer1">
+				  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+				</div>
+
+				<div class="container1">
+				  <label for="uname"><b>Username</b></label>
+				  <input type="text" placeholder="Enter Username" id="userTxt" name="username" required>
+
+				  <label for="psw"><b>Password</b></label>
+				  <input type="password" placeholder="Enter Password" id="passTxt" name="password" required>
+					
+				  <button type="button" id="loginBtn">Login</button>
+				</div>
+
+				<div class="container1" style="background-color:#f1f1f1">
+				  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn1">Cancel</button>
+                    <span class="psw">don't have an account? <a id="signupfromlogin" href="http://127.0.0.1:8000/signup/">sign-up</a></span>
+				    <!--<br>
+                    <span class="psw">Forgot <a href="#">password?</a></span>
+-->
+				</div>
+			  </form>
+		  </div>
+		</div>
+
+
+		 <script>
+
+			String.prototype.replaceAll = function(search, replacement) {
+			   let target = this;
+			   return target.replace(new RegExp(search, 'g'), replacement);
+			};
+
+			let chooseComp;
+			let compButton=0;
+			document.getElementById("python2").onclick = function(){
+			   chooseComp = "python2";
+			   compButton = 1;
+			   document.getElementById("chooseCompiler").innerHTML = chooseComp;
+			};
+
+			document.getElementById("python3").onclick = function(){
+			   chooseComp = "python3";
+			   compButton = 1;
+			   document.getElementById("chooseCompiler").innerHTML = chooseComp;
+			   document.getElementById("chooseCompiler").onresize
+			};
+
+			document.getElementById("cpp").onclick = function(){
+			   chooseComp = "cpp";
+			   compButton = 1;
+			   document.getElementById("chooseCompiler").innerHTML = chooseComp;
+			};
+
+
+			function loadFileAsText(){
+			var fileToLoad = document.getElementById("fileUpload").files[0];
+			var fileReader = new FileReader();
+			fileReader.onload = function(fileLoadedEvent){
+				var textFromFileLoaded = fileLoadedEvent.target.result;
+				document.getElementById("textWriting").value = textFromFileLoaded;
+			};
+
+			fileReader.readAsText(fileToLoad, "UTF-8");
+			}
+
+			document.getElementById("myBtn").onclick = function () {
+				const Http = new XMLHttpRequest();
+
+
+				if (compButton == 0){
+					alert("Please Select a Compiler")
+
+				}
+                if (chooseComp != "cpp") {
+                    let txt = document.getElementById("textWriting").value;
+				    txt = txt.replaceAll('\n',"%0A");
+				    txt = txt.replaceAll(';',"%3B");
+				    txt = txt.replaceAll('#',"%23");
+				    txt = txt.replaceAll('"',"%5C%22");
+				    txt = txt.replaceAll("'","%5C%27");
+				    txt = txt.replaceAll("&","%26");
+				    txt = txt.replace(/\+/gi, "%2B");
+
+
+                    const url = ' http://127.0.0.1:8000/mainFile/send/?typename=' + chooseComp + '&code=' + String(txt);
+                    Http.open("GET", url);
+				    Http.send();
+                } else {
+                    let txt2 = document.getElementById("textWriting").value;
+				    txt2 = txt2.replaceAll('\n',"%0A");
+				    txt2 = txt2.replaceAll(';',"%3B");
+				    txt2 = txt2.replaceAll('#',"%23");
+				    txt2 = txt2.replaceAll('"',"%22");
+				    txt2 = txt2.replaceAll("'","%27");
+				    txt2 = txt2.replaceAll("&","%26");
+				    txt2 = txt2.replace(/\+/gi, "%2B");
+
+
+
+                    const url=' http://127.0.0.1:8000/mainFile/send/?typename=' + chooseComp + '&code=' + String(txt2);
+                    Http.open("GET", url);
+				    Http.send();
+
+                }
+
+
+				Http.onreadystatechange = (e) => {
+					document.getElementById("resultShow").value = Http.responseText;
+
+				}
+			};
+
+			document.getElementById("loginBtn").onclick = function () {
+                const Http = new XMLHttpRequest();
+				let _username = document.getElementById("userTxt").value;
+				let _password = document.getElementById("passTxt").value;
+
+				const url=' http://127.0.0.1:8000/mainFile/login/?username=' + _username + '&password=' + _password;
+
+				Http.open("GET", url);
+				Http.send();
+                setTimeout(function(){ }, 500);
+                var check = Http.response;
+				if (check == 2){
+				    alert("Wrong Password")
+                }
+				else if (check== 1){
+				    alert("User name does not exist")
+                }
+				else {
+                setTimeout(function(){ window.open(' http://127.0.0.1:8000/login', "_self"); }, 500);
+                }
+                const Http0 = new XMLHttpRequest();
+				const url0=' http://127.0.0.1:8000/login/save/?username=' + _username ;
+				Http0.open("GET", url0);
+				Http0.send();
+            };
+
+
+			// Get the modal
+			var modal = document.getElementById('id01');
+
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+				}
+			}
+
+		 </script>
+
+    </body>
+<!DOCTYPE html>

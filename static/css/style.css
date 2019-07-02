@@ -1,0 +1,286 @@
+.saaal{
+    color: coral;
+    font-size: 30px;
+}
+
+p:hover{
+    background: gray;
+}
+
+.bat:focus{
+    background: rgb(202, 201, 201);
+}
+
+
+.box{
+    background: cornflowerblue;
+}
+
+.contain{
+    background: cadetblue;
+    padding: 30px;
+    border-radius: 4px;
+    margin:0 auto;
+    border: 1px solid black;
+}
+ /*body backgrond*/
+.hi{
+    background: rgb(202, 238, 247);
+}
+
+.login{
+    margin: 30px;
+    position: absolute;
+    top: 1%;
+    right: 5%;
+    font-size: 20px;
+}
+
+.welcome{
+    position: absolute;
+    right: 40%;
+    left: 40%;
+    top: 3%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+}
+
+.code{
+    background: rgb(202, 238, 247);
+    margin: 30px;
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    right: 45%;
+    left: 1%;
+}
+
+.size{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: x-small;
+}
+
+.codein{
+    border-top-color: blue;
+    border-left-color: blue;
+    border-radius: 4px;
+    position: absolute;
+    height: 360px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-left: 8px;
+    padding-top: 4px;
+    padding-right: 8px;
+    color: black;
+    background: white;  
+}
+
+.codein:hover{
+    background: rgb(230, 230, 230);
+}
+
+.codein:focus{
+    background: rgb(207, 207, 207);
+}
+
+/*result style*/
+
+.result{
+    border-top-color: darkblue !important;
+    border-radius: 8px;
+    background: rgb(187, 189, 189);
+    padding-left: 10px;
+    padding-top: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+    margin: 30px;
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    left: 55%;
+    right: 1%;
+    height: 369px;
+    width: 500px;
+}
+
+/*result style*/
+
+.showResult{
+    
+    margin: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+}
+
+.showResult:hover{
+    background:rgb(109, 108, 108);
+}
+
+input[type=text]{
+    border: 2px;
+}
+
+/*open file botton*/
+.openFile{
+    margin: 20px;
+    position: absolute;
+    bottom: 1%;
+    left: 5%;
+}
+
+.execute{
+    margin: 20px;
+    position: absolute;
+    bottom: 2%;
+    right: 5%;
+}
+
+.dropbtn001 {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown001 {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content001 {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content001 a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content001 a:hover {background-color: #f1f1f1}
+
+.dropdown001:hover .dropdown-content001 {
+  display: block;
+}
+
+.dropdown001:hover .dropbtn001 {
+  background-color: #3e8e41;
+}
+
+/*login form modal*/
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+
+.cancelbtn1 {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer1 {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+.container1 {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+.modal1 {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 60px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+/*open login form animation*/
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}

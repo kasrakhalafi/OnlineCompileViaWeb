@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+    <head>
+        < <title>Online Compiler</title>
+         {% load static %}
+        <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+        <link href="{% static '/css/materialize-rtl.min.css' %}" rel="stylesheet"/>
+        <script src="{% static '/js/materialize.min.js' %}"></script>
+        <script src="{%  static '/js/jquery-1.9.1.min.js' %}"></script>
+		<meta charset="UTF-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+    <body class="hi">
+		<div class="row">
+			<div class="col s12 m7">
+				<div class="dropdown001">
+					<button id="chooseCompiler" class="dropbtn001">choose compiler</button>
+						<div class="dropdown-content001">
+							<button id="python2" >python2</button>
+							<button id="python3">python3</button>
+							<button id="cpp" >C++</button>
+						</div>
+				</div>
+			</div>
+			<div class="col s12 m7">
+          <div class="login">
+
+            <a class="button" href="http://127.0.0.1:8000/">
+              <img src="logout.jpg"  style="width:40px;height:40px;"/>
+            </a>
+          </div>
+        </div>
+			<div class="col s12 m7">
+				<div class="welcome">
+					Welcome to easy compile!
+				</div>
+			</div>
+			<div class="col s12 m7">
+				<div class="code">
+					<textarea class="codein" id="textWriting" placeholder="Write your code here.." ></textarea>
+				</div>
+			</div>
+			<div class="col s12 m7">
+				<textarea readonly id="resultShow" class="result" placeholder="Code will be shown here">
+				</textarea>
+			</div>
+			<div class="col s12 m7">
+				<div class="openFile">
+					<form action="#">
+						<div class="file-field input-field">
+							<div class="btn">
+								<span>Open File</span>
+								<input type="file" multiple>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" onchange="loadFileAsText()" id="fileUpload" type="file" placeholder="Upload one or more files">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col s12 m7">
+				<div class="execute">
+					<button class="btn waves-effect waves-light" id="myBtn" type="submit" name="action">compile
+						<i class="material-icons right">send</i>
+					</button>
+				</div>
+			</div>
+
+      <div class="col s12 m7">
+  			<div style="margin: 20px;position: absolute;bottom: 2%;right: 45%;width: 150px;">
+  				<form action="#">
+  				Project name:<input type="text" name="pname" id="projectname" />
+  				</form>
+  				<button class="btn waves-effect waves-light" id="projectname02" type="submit" name="action" >save</button>
+  			</div>
+  		</div>
+  	</div>
+
+<!--<a href="download1.png" download="file" id="dn0">
+            </a>
+-->
+
+
+
+
+		 <script>
+
+			String.prototype.replaceAll = function(search, replacement) {
+			   let target = this;
+			   return target.replace(new RegExp(search, 'g'), replacement);
+			};
+
+
+            /*choose compiler*/
+			let chooseComp;
+			let compButton=0;
+			document.getElementById("python2").onclick = function(){
+			   chooseComp = "python2";
+			   compButton = 1;
+			   document.getElementById("chooseCompiler").innerHTML = chooseComp;
+			};
+
+			document.getElementById("python3").onclick = function(){
+			   chooseComp = "python3";
+			   compButton = 1;
+			   document.getElementById("chooseCompiler").innerHTML = chooseComp;
+			   document.getElementById("chooseCompiler").onresize
+			};
+
+			document.getElementById("cpp").onclick = function(){
+			   chooseComp = "cpp";
+			   compButton = 1;
+			   document.getElementById("chooseCompiler").innerHTML = chooseComp;
+			};
+
+            /*to open the file upload*/
+			function loadFileAsText(){
+			var fileToLoad = document.getElementById("fileUpload").files[0];
+			var fileReader = new FileReader();
+			fileReader.onload = function(fileLoadedEvent){
+				var textFromFileLoaded = fileLoadedEvent.target.result;
+				document.getElementById("textWriting").value = textFromFileLoaded;
+			};
+
+			fileReader.readAsText(fileToLoad, "UTF-8");
+			}
+
+
+			/*make a name for save file*/
+            document.getElementById("projectname02").onclick = function() {
+			var name = document.getElementById("projectname").value;
+			var context = document.getElementById("textWriting").value;
+			const Http = new XMLHttpRequest();
+			const url = ' http://127.0.0.1:8000/login/save/?codename=' + name + '&context=' + String(context) +'&type=' + chooseComp;
+			Http.open("GET", url);
+			Http.send();
+			alert("kasra")
+		    };
+
+			document.getElementById("myBtn").onclick = function () {
+				const Http = new XMLHttpRequest();
+
+                /*make url to send for compiler*/
+				if (compButton == 0){
+					alert("Please Select a Compiler")
+
+				}
+                if (chooseComp != "cpp") {
+                    let txt = document.getElementById("textWriting").value;
+				    txt = txt.replaceAll('\n',"%0A");
+				    txt = txt.replaceAll(';',"%3B");
+				    txt = txt.replaceAll('#',"%23");
+				    txt = txt.replaceAll('"',"%5C%22");
+				    txt = txt.replaceAll("'","%5C%27");
+				    txt = txt.replaceAll("&","%26");
+				    txt = txt.replace(/\+/gi, "%2B");
+
+                    alert(txt);
+                    const url = ' http://127.0.0.1:8000/mainFile/send/?typename=' + chooseComp + '&code=' + String(txt);
+                    Http.open("GET", url);
+				    Http.send();
+                } else {
+                    let txt2 = document.getElementById("textWriting").value;
+				    txt2 = txt2.replaceAll('\n',"%0A");
+				    txt2 = txt2.replaceAll(';',"%3B");
+				    txt2 = txt2.replaceAll('#',"%23");
+				    txt2 = txt2.replaceAll('"',"%22");
+				    txt2 = txt2.replaceAll("'","%27");
+				    txt2 = txt2.replaceAll("&","%26");
+				    txt2 = txt2.replace(/\+/gi, "%2B");
+
+				    alert(txt2);
+
+                    const url=' http://127.0.0.1:8000/mainFile/send/?typename=' + chooseComp + '&code=' + String(txt2);
+                    Http.open("GET", url);
+				    Http.send();
+                }
+
+
+
+				Http.onreadystatechange = (e) => {
+					document.getElementById("resultShow").value = Http.responseText;
+					//alert(Http.responseText);
+				}
+			};
+
+
+		 </script>
+
+    </body>
+<!DOCTYPE html>

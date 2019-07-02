@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;background: rgb(202, 238, 247);
+}
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+<body>
+
+<form action="#" style="border:1px solid #ccc">
+  <div class="container">
+    <h1>Sign Up</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+
+    <label for="username"><b>Username</b></label>
+    <input id="username_" type="text" placeholder="Enter Username" name="username" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input id="psw_" type="password" placeholder="Enter Password" name="psw" required>
+
+    <label for="psw-repeat"><b>Repeat Password</b></label>
+    <input id="psw-repeat_" type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    
+    <label>
+      <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+    </label>
+    
+    <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+    <div class="clearfix">
+      <button id="cancelBtn" type="button" class="cancelbtn">Cancel</button>
+      <button onautocomplete="false" id="signupBtn" type="submit" class="signupbtn">Sign Up</button>
+    </div>
+  </div>
+</form>
+
+<script>
+    document.getElementById("cancelBtn").onclick = function () {
+        location.href='/mainFile/';
+    };
+/*check sign up form to send as url if it is true */
+    document.getElementById("signupBtn").onclick = function () {
+        const Http = new XMLHttpRequest();
+        let username = document.getElementById("username_").value;
+        let psw1 = document.getElementById("psw_").value;
+        let psw2 = document.getElementById("psw-repeat_").value;
+        if (psw1 != psw2) {
+            alert("passwords entered are not same")
+        } else if (psw1.length < 7) {
+            alert("password is short");
+        }
+        else if (psw1.length > 26 ) {
+            alert("password is too long");
+        }
+        else
+        {
+            const url = ' http://127.0.0.1:8000/signup/sign_up/?username=' + username + '&password=' + psw1;
+            alert("kasra1")
+            Http.open("GET", url);
+            Http.send();
+            alert("kasra");
+            Http.onreadystatechange = (e) => {
+				alert("kian")	;
+                alert(Http.responseText);
+					//alert(Http.responseText);
+				}
+        }
+    }
+</script>
+</body>
+</html>
+
